@@ -6,6 +6,7 @@ import api from '../../services/api';
 import './styles.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { responsiveMap } from 'antd/lib/_util/responsiveObserve';
 
 const { TextArea } = Input;
 const { Option } = Select;
