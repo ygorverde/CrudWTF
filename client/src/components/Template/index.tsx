@@ -1,6 +1,7 @@
 import { useState, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout, Menu, Avatar } from 'antd';
+import { useAuth } from '../../hooks/useAuth';
 
 import 'antd/dist/antd.css';
 
@@ -21,6 +22,7 @@ type LayoutProps = {
 const { Header, Sider, Content } = Layout;
 
 export function Template({ children }: LayoutProps) {
+    const { user, validating } = useAuth()
     const [collapsed, setCollapsed] = useState(false);
 
     function toggle() {
@@ -29,22 +31,28 @@ export function Template({ children }: LayoutProps) {
 
     return (
         <Layout className="layout">
+            { user && 
             <Sider trigger={null} collapsible collapsed={collapsed}>
                 <div className="logo">
                     <Avatar size={40} icon={<UserOutlined />} />
-                        <span> Olá, Ygor.</span>
+                    <div className="userandtype">
+                        <span> Olá, {user?.name}.</span>
+                        <a> { user.type === 1 ? 'Gestor' : 'Técnico' } </a>
+                    </div>
                 </div>
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                     <Menu.Item key="1" icon={<PlusOutlined />} title={false}>
                         <Link to="/">Novo atendimento</Link>
                     </Menu.Item>
                     <Menu.Item key="2" icon={<BookOutlined />} title={false}>
-                        <Link to="/orders">Atendimentos</Link>
+                        <Link to="/services">Atendimentos</Link>
                     </Menu.Item>
                 </Menu>
             </Sider>
+}
             <Layout className="site-layout">
                 <Header className="site-layout-background" style={{ padding: 0 }}>
+                    
                     {collapsed ?
                         <MenuUnfoldOutlined className="trigger" onClick={toggle} /> :
                         <MenuFoldOutlined className="trigger" onClick={toggle} />

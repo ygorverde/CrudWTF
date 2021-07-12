@@ -1,12 +1,16 @@
 
-import { Row, Col, Input, DatePicker, Select, Button } from 'antd';
+import { Row, Col, Input, DatePicker, Select, Button, Divider } from 'antd';
 import { UserOutlined, ToolOutlined } from '@ant-design/icons';
+import { toast, ToastContainer } from 'react-toastify';
+import { ModalWTF } from '../Modal';
+import 'react-toastify/dist/ReactToastify.css';
+
 import api from '../../services/api';
 
 import './styles.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { responsiveMap } from 'antd/lib/_util/responsiveObserve';
+import { useAuth } from '../../hooks/useAuth';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -17,10 +21,10 @@ type TypesType = {
 }
 
 export function ClientSection() {
+    const { user } = useAuth();
     const [type, setType] = useState('');
     const [client, setClient] = useState('');
     const [observation, setObservation] = useState('');
-    const [user, setUser] = useState(1);
     const [types, setTypes] = useState<TypesType[]>([]);
     const [creatingType, setCreatingType] = useState(false);
 
@@ -29,9 +33,10 @@ export function ClientSection() {
     const mes = String(data.getMonth() + 1).padStart(2, '0');
     const ano = data.getFullYear();
     const dateNow = dia + '/' + mes + '/' + ano;
+    const dateNowSql = ano + '-' + mes + '-' + dia;
 
     useEffect(() => {
-        api.get('/').then(resp => {
+        api.get('/types').then(resp => {
             setTypes(resp.data)
         })
     }, [])
@@ -45,13 +50,29 @@ export function ClientSection() {
     };
 
     function submitService() {
-        api.post('/api/insert', { type: type, client: client, observation: observation, user: user }).then(() => {
-            alert('Inserido com sucesso!')
+        api.post('/services', { 
+            date_exec: dateNowSql, 
+            client: client, 
+            observation: observation, 
+            id_user: user?.id, 
+            id_type: type }).then(resp => {
+            toast.success('Atendimento realizado com sucesso!!');
+            clear();
+        }).catch((err) => {
+            toast.error(err.response.data);
         })
     };
 
+    function clear() {
+        setType('');
+        setClient('');
+        setObservation('');
+    }
+
     return (
         <div className="clientInfos">
+            <ModalWTF setIsOpen={setCreatingType} modalIsOpen={creatingType}/>
+            <ToastContainer />
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} align="top">
                 <Col className="gutter-row" span={5}>
                     <span>Data da execução</span>
@@ -67,22 +88,20 @@ export function ClientSection() {
                     <span>Tipo de atendimento</span>
                     <br />
                     <br />
-                    {!creatingType ?
+
                         <Select
                             style={{ width: '100%' }}
                             onChange={handleSelect}
-                            placeholder="Selecione o tipo"
+                            placeholder="Selecione um tipo"
                             value={type}
                         >
-                            <Option key="newtype" value="0">+ Criar novo tipo</Option>
+                            <Option key="newtype" value="0" style={{backgroundColor: '#ff0000', color: '#FFF'}}>+ Criar novo tipo</Option>
                             {types.map(type => {
                                 return (
                                     <Option value={type.id} key={type.id}>{type.description}</Option>
                                 )
                             })}
                         </Select>
-                        : <Input placeholder="Digite o novo tipo de atendimento" prefix={<ToolOutlined />}
-                            onChange={(e) => setType(e.target.value)} />}
                 </Col>
                 <Col className="gutter-row" span={6}>
                     <span>Cliente atendido</span>
@@ -105,7 +124,10 @@ export function ClientSection() {
                     />
                 </Col>
             </Row>
-            <Button onClick={submitService} type="primary">Prestar atendimento</Button>
+            <Divider type="horizontal" orientation="left">
+                <Button onClick={submitService} type="primary">Prestar atendimento</Button>
+                {/* <Button onClick={() => console.log('User: ', user)} style={{ background: '#FF0000', color: '#FFF', marginLeft: '25px' }}>Adicionar novo tipo</Button> */}
+                </Divider>
         </div>
     );
 }

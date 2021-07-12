@@ -1,13 +1,19 @@
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 
 import { Services } from './pages/Services';
 import { NewService } from './pages/NewService';
+import { Auth } from './pages/Auth'
+import PrivateRoute from './components/PrivateRoute';
 
-export function Routes() {
+const Routes = () => {
+
     return (
         <Switch>
-            <Route exact path="/" component={ NewService }/>
-            <Route exact path="/orders" component={ Services }/>
+            <PrivateRoute exact path="/" component={NewService} />
+            <PrivateRoute exact path="/auth" component={Auth} />
+            <PrivateRoute  exact path="/services" component={Services} />
         </Switch>
     )
 }
+
+export default Routes;

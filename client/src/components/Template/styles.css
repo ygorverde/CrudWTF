@@ -26,3 +26,13 @@
   margin: 25px;
   color: #FFF;
 }
+
+.userandtype {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userandtype a {
+  font-size: 0.8rem;
+}
