@@ -11,6 +11,7 @@ import './styles.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { useTypes } from '../../hooks/useTypes';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -22,6 +23,7 @@ type TypesType = {
 }
 
 export function ClientSection() {
+    const { list } = useTypes()
     const { user } = useAuth();
     const [type, setType] = useState('');
     const [client, setClient] = useState('');
@@ -37,10 +39,11 @@ export function ClientSection() {
     const dateNowSql = ano + '-' + mes + '-' + dia;
 
     useEffect(() => {
-        api.get('/types').then(resp => {
-            setTypes(resp.data)
-        })
-    }, [])
+        // api.get('/types').then(resp => {
+        //     setTypes(resp.data)
+        // })
+        setTypes(list)
+    }, [list])
 
     function handleSelect(value: string) {
         if (value === '0') {

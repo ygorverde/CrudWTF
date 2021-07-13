@@ -57,6 +57,7 @@ export function Template({ children }: LayoutProps) {
             <Layout className="site-layout">
                 <Header className="site-layout-background" style={{ padding: 0 }} >
                     <div className="pitangueira">
+                        
                         {collapsed ?
                             <MenuUnfoldOutlined className="trigger" onClick={toggle} /> :
                             <MenuFoldOutlined className="trigger" onClick={toggle} />

@@ -1,5 +1,5 @@
 import { List, Button, Skeleton, Switch } from 'antd';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined } from '@ant-design/icons';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTypes } from '../../hooks/useTypes';

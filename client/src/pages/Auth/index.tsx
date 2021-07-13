@@ -1,17 +1,19 @@
 import { Input, Button } from 'antd';
-import api from '../../services/api';
 import { useAuth } from '../../hooks/useAuth';
 
 import './styles.css';
 import { useHistory } from 'react-router-dom';
+import { useState } from 'react';
 
 export function Auth() {
     const history = useHistory();
     const { user, signIn } = useAuth();
+    const [ email, setEmail ] = useState('');
+    const [ password, setPassword ] = useState('');
 
     async function handleLogin() {
         if(user === undefined){
-            await signIn()
+            await signIn(email, password)
         }
         history.push('/')
     }
@@ -23,9 +25,9 @@ export function Auth() {
                 <hr />
                 <br />
                 <span>E-mail</span>
-                <Input placeholder="Email"/>
+                <Input placeholder="Email" onChange={e => setEmail(e.target.value)}/>
                 <span>Senha</span>
-                <Input placeholder="Senha"/>
+                <Input placeholder="Senha" type="password" onChange={e => setPassword(e.target.value)}/>
                 <br />
                 <br />
                 <Button type="primary" onClick={handleLogin}>ENTRAR</Button>

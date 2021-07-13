@@ -12,7 +12,7 @@ type User = {
 
 type AuthContextType = {
     user: User | undefined;
-    signIn: () => Promise<void>;
+    signIn: (email: String, senha: String) => Promise<void>;
     validateToken: (user: User) => Promise<void>;
     validating: boolean;
 }
@@ -36,8 +36,9 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
         }
     }, [])
 
-    async function signIn() {
-        const resp = await api.post('/signin', { email: 'ygor@gmail.com', password: '123456' });
+    async function signIn(email: String, password: String) {
+        // const resp = await api.post('/signin', { email: 'ygor@gmail.com', password: '123456' });
+        const resp = await api.post('/signin', { email: email, password: password });
         
         if(resp.data){
             setValidating(true);
