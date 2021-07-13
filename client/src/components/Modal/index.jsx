@@ -16,10 +16,15 @@ export function ModalWTF ({...props})  {
   return (
     <>
 
-      <Modal title="Adicionar novo tipo de atendimento" visible={props.modalIsOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title="Adicionar novo tipo de atendimento" visible={props.modalIsOpen} 
+      onOk={handleOk} 
+      onCancel={handleCancel}
+      cancelText={`Cancelar`}
+      okText={`Adicionar`}
+      >
         <form>
         <Input prefix={<ToolOutlined />} maxLength={25} placeholder="Digite o novo tipo de atendimento"/>
-        <Button onClick={handleCancel} style={{ background: '#FF0000', color: '#FFF', marginTop: '10px' }}>Adicionar</Button>
+        {/* <Button onClick={handleCancel} style={{ background: '#FF0000', color: '#FFF', marginTop: '10px' }}>Adicionar</Button> */}
         </form>
       </Modal>
     </>

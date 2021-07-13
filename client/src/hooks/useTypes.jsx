@@ -21,15 +21,26 @@ export function useTypes() {
         })
     }
 
+     async function setDisabledType(id, checked) {
+         try{
+             await api.put('/types', { id: id, checked: checked })
+            }catch(err){
+                console.log(err)
+            }
+            await getTypes();
+     }
+
     async function deleteType(id) {
-        try{
-            const result = await api.delete(`/types?id=${id}`)
-            toast.error(result.data)
-            await getTypes()
-        }catch (msg){
-            toast.error(msg)
+        if (window.confirm('Tem certeza que deseja excluir?')) {
+            try {
+                const result = await api.delete(`/types?id=${id}`)
+                toast.error(result.data)
+                await getTypes()
+            } catch (msg) {
+                toast.error(msg)
+            }
         }
     }
 
-    return { initLoading, list, deleteType }
+    return { initLoading, list, deleteType, setDisabledType }
 }

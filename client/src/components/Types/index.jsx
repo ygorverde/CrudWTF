@@ -1,4 +1,4 @@
-import { List, Button, Skeleton } from 'antd';
+import { List, Button, Skeleton, Switch } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,7 +13,11 @@ const buttonAction = {
 }
 
 export function Types() {
-    const { initLoading, list, deleteType } = useTypes();
+    const { initLoading, list, deleteType, setDisabledType } = useTypes();
+
+    function handleSwitch(id, checked) {
+        setDisabledType(id, checked)
+    }
 
     return (
         <>
@@ -27,7 +31,7 @@ export function Types() {
             renderItem={item => (
                 <List.Item
                     actions={[
-                        <Button style={{...buttonAction, backgroundColor: '#1890ff'}}><EditOutlined /></Button>,
+                        <Switch checked={item.enabled} onChange={c => handleSwitch(item.id, c)} />,
                         <Button onClick={() => deleteType(item.id)}style={buttonAction}><DeleteOutlined /></Button>
                     ]}
                 >

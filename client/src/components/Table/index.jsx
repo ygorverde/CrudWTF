@@ -3,16 +3,19 @@ import { PrinterOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
 
+import dateFormat from 'dateformat';
+
 export function TableAntd() {
   const [ services, setServices ] = useState([]);
   const [ pagination, setPagination ] = useState({current: 1, pageSize: 5, total: 0});
   const [ loading, setLoading ] = useState(true);
-  
+
   useEffect(() => {
     const arrayTableServices = [];
     setLoading(true)
     api.get(`/services?page=${1}`).then(resp => {
       resp.data.data.map(service => {
+        formatDate(service)
         return arrayTableServices.push({...service, key: service.id})
       })
       setServices(arrayTableServices);
@@ -25,10 +28,15 @@ export function TableAntd() {
     const services = await api.get(`/services?page=${pagination.current}`);
     const arrayTableServices = [];
     await services.data.data.map(service => {
+      formatDate(service)
       return arrayTableServices.push({...service, key: service.id})
     })
     setServices(arrayTableServices);
     setPagination({...pagination, total: services.data.count})
+  }
+
+  function formatDate(service) {
+    return service.date_exec = dateFormat(service.date_exec, 'dd/mm/yyyy')
   }
 
   const columns = [
@@ -54,6 +62,7 @@ export function TableAntd() {
       onChange={handleTableChange}
       dataSource={services}
       loading={loading}
+      tableLayout={`fixed`}
     />
   );
 }

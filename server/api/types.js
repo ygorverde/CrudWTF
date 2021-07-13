@@ -23,5 +23,15 @@ module.exports = app => {
         }
     }
 
-    return { get, remove }
+    const put = async (req, res) => {
+        const body = { ...req.body }
+        try {
+            await app.db.query(queries.disableType, [body.checked, body.id])
+            res.status(202).send()
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    return { get, remove, put }
 }

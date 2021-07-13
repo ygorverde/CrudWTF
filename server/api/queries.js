@@ -10,6 +10,7 @@ module.exports = {
     allTypes: `SELECT * FROM types;`,
     verifyTypeInUse: `SELECT id from services s where s.id_type = ? LIMIT 1;`,
     removeType: `DELETE FROM TYPES WHERE ID = ?`,
+    disableType: `UPDATE types SET ENABLED = ? WHERE ID = ?;`,
     saveUser: `INSERT INTO users (name, email, password) VALUES (?,?,?);`,
     userExists: `SELECT * FROM users where email = (?)`
 }

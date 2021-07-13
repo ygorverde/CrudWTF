@@ -37,7 +37,7 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
     }, [])
 
     async function signIn() {
-        const resp = await api.post('/signin', { email: 'paulo@gmail.comm', password: '123456' });
+        const resp = await api.post('/signin', { email: 'ygor@gmail.com', password: '123456' });
         
         if(resp.data){
             setValidating(true);

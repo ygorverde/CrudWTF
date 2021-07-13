@@ -15,14 +15,6 @@ export function Auth() {
         }
         history.push('/')
     }
-    
-
-    function getTypes() {
-        api.get('/types')
-        .then(res => {
-            console.log(res)
-        })
-    }
 
     return (
         <div className="auth-content">
@@ -37,8 +29,6 @@ export function Auth() {
                 <br />
                 <br />
                 <Button type="primary" onClick={handleLogin}>ENTRAR</Button>
-                <Button type="dashed" onClick={getTypes}>PEGAR TYPES</Button>
-                <Button type="default" onClick={() => {}}>Setar usuário</Button>
             </div>
         </div>
     )

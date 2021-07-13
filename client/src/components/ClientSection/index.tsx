@@ -18,6 +18,7 @@ const { Option } = Select;
 type TypesType = {
     id: string;
     description: string;
+    enabled: number;
 }
 
 export function ClientSection() {
@@ -98,7 +99,7 @@ export function ClientSection() {
                             <Option key="newtype" value="0" style={{backgroundColor: '#ff0000', color: '#FFF'}}>+ Criar novo tipo</Option>
                             {types.map(type => {
                                 return (
-                                    <Option value={type.id} key={type.id}>{type.description}</Option>
+                                    <Option value={type.id} disabled={type.enabled === 1 ? false : true}key={type.id}>{type.description}</Option>
                                 )
                             })}
                         </Select>
