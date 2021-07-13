@@ -8,6 +8,8 @@ module.exports = {
     INNER JOIN types AS T on S.id_type = T.id ORDER BY S.id ASC LIMIT ? OFFSET ?;`,
     saveService: `INSERT INTO services (date_exec, client, observation, id_user, id_type) VALUES (?,?,?,?,?);`,
     allTypes: `SELECT * FROM types;`,
+    verifyTypeInUse: `SELECT id from services s where s.id_type = ? LIMIT 1;`,
+    removeType: `DELETE FROM TYPES WHERE ID = ?`,
     saveUser: `INSERT INTO users (name, email, password) VALUES (?,?,?);`,
     userExists: `SELECT * FROM users where email = (?)`
 }

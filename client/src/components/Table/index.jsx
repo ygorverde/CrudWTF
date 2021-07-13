@@ -1,19 +1,23 @@
-import { Table } from 'antd';
+import { Button, Table } from 'antd';
+import { PrinterOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
 
 export function TableAntd() {
   const [ services, setServices ] = useState([]);
   const [ pagination, setPagination ] = useState({current: 1, pageSize: 5, total: 0});
+  const [ loading, setLoading ] = useState(true);
   
   useEffect(() => {
     const arrayTableServices = [];
+    setLoading(true)
     api.get(`/services?page=${1}`).then(resp => {
       resp.data.data.map(service => {
         return arrayTableServices.push({...service, key: service.id})
       })
       setServices(arrayTableServices);
       setPagination({current: 1, pageSize: resp.data.limit, total: resp.data.count})
+      setLoading(false)
     })
   }, [])
 
@@ -33,7 +37,7 @@ export function TableAntd() {
     { title: 'Técnico', dataIndex: 'user', key: 'user' },
     { title: 'Tipo', dataIndex: 'type', key: 'type' },
     { title: 'Data de Execução', dataIndex: 'date_exec', key: 'date_exec' },
-    { title: 'Ações', key: 'operation', render: () => <a>Imprimir</a> },
+    { title: 'Ações', key: 'operation', render: () => <Button onClick={() => window.print()}><PrinterOutlined /></Button> },
   ];
 
    function handleTableChange(pagination) {
@@ -49,6 +53,7 @@ export function TableAntd() {
       pagination={pagination}
       onChange={handleTableChange}
       dataSource={services}
+      loading={loading}
     />
   );
 }

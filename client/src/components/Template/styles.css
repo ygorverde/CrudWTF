@@ -33,6 +33,22 @@
   align-items: center;
 }
 
-.userandtype a {
-  font-size: 0.8rem;
+.pitangueira {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
+
+.title {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.title h1 {
+  color: #001529;
+  opacity: 0.9;
+  font: 700 20px 'Roboto', sans-serif;
+}
+

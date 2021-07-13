@@ -6,6 +6,7 @@ module.exports = app => {
     app.route('/types')
     .all(app.config.passport.authenticate())
     .get(app.api.types.get)
+    .delete(app.api.types.remove)
 
     app.route('/services')
     .all(app.config.passport.authenticate())

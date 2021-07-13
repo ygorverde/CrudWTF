@@ -5,5 +5,15 @@ module.exports = app => {
         if(typeof value === 'string' && !value.trim()) throw msg
     }
 
-    return { existsOrError }
+        
+    function notExistsOrError(value, msg) { // Se não existir: Ok. Se existir: Error
+        try {
+            existsOrError(value, msg)
+        } catch (msg) {
+            return 
+        }
+        throw msg
+    } 
+
+    return { existsOrError, notExistsOrError }
 }

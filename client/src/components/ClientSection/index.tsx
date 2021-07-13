@@ -2,8 +2,8 @@
 import { Row, Col, Input, DatePicker, Select, Button, Divider } from 'antd';
 import { UserOutlined, ToolOutlined } from '@ant-design/icons';
 import { toast, ToastContainer } from 'react-toastify';
-import { ModalWTF } from '../Modal';
 import 'react-toastify/dist/ReactToastify.css';
+import { ModalWTF } from '../Modal';
 
 import api from '../../services/api';
 
@@ -126,7 +126,6 @@ export function ClientSection() {
             </Row>
             <Divider type="horizontal" orientation="left">
                 <Button onClick={submitService} type="primary">Prestar atendimento</Button>
-                {/* <Button onClick={() => console.log('User: ', user)} style={{ background: '#FF0000', color: '#FFF', marginLeft: '25px' }}>Adicionar novo tipo</Button> */}
                 </Divider>
         </div>
     );
