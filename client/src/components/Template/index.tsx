@@ -57,10 +57,9 @@ export function Template({ children }: LayoutProps) {
             <Layout className="site-layout">
                 <Header className="site-layout-background" style={{ padding: 0 }} >
                     <div className="pitangueira">
-                        
                         {collapsed ?
-                            <MenuUnfoldOutlined className="trigger" onClick={toggle} /> :
-                            <MenuFoldOutlined className="trigger" onClick={toggle} />
+                            <MenuUnfoldOutlined hidden={user ? false : true} className="trigger" onClick={toggle} /> :
+                            <MenuFoldOutlined hidden={user ? false : true} className="trigger" onClick={toggle} />
                         }
                         <div className="title">
                             <h1>PITANGUEIRA MANUTENÇÃO DE HARDWARE LTDA</h1>
