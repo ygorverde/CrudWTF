@@ -15,7 +15,7 @@ consign()
         .then('./api/validation.js')
         .then('./api')
         .then('./config/routes.js')
-        .into(app)
+        .into(app) 
 
 app.listen(3001, () => {
     console.log('Funcionando na porta 3001')
